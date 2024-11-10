@@ -15,6 +15,30 @@ public class PenghitungKataFrame extends javax.swing.JFrame {
     public PenghitungKataFrame() {
         initComponents();
     }
+    
+    // Method untuk menghitung jumlah kata, karakter, kalimat, dan paragraf
+    private void calculateCounts() {
+        String text = inputArea.getText().trim();
+
+        // Menghitung jumlah karakter (termasuk spasi)
+        int charCount = text.length();
+
+        // Menghitung jumlah kata
+        int wordCount = text.isEmpty() ? 0 : text.split("\\s+").length;
+
+        // Menghitung jumlah kalimat
+        int sentenceCount = text.split("[.!?]").length;
+
+        // Menghitung jumlah paragraf
+        int paragraphCount = text.isEmpty() ? 0 : text.split("\\n").length;
+
+        // Update hasil di JLabel masing-masing
+        charCountLabel.setText("Karakter: " + charCount);
+        wordCountLabel.setText("Kata: " + wordCount);
+        sentenceCountLabel.setText("Kalimat: " + sentenceCount);
+        paragraphCountLabel.setText("Paragraf: " + paragraphCount);
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -46,7 +70,7 @@ public class PenghitungKataFrame extends javax.swing.JFrame {
         jPanel6 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         paragraphCountLabel = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
+        countButton = new javax.swing.JButton();
         previousButton = new javax.swing.JButton();
         nextButton = new javax.swing.JButton();
 
@@ -206,13 +230,18 @@ public class PenghitungKataFrame extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(0, 7, 0, 7);
         jPanel2.add(jPanel6, gridBagConstraints);
 
-        jButton3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton3.setText("Hitung");
+        countButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        countButton.setText("Hitung");
+        countButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                countButtonActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 14, 0);
-        jPanel2.add(jButton3, gridBagConstraints);
+        jPanel2.add(countButton, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -261,6 +290,10 @@ public class PenghitungKataFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_previousButtonActionPerformed
 
+    private void countButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_countButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_countButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -298,8 +331,8 @@ public class PenghitungKataFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel charCountLabel;
+    private javax.swing.JButton countButton;
     private javax.swing.JTextArea inputArea;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
