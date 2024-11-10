@@ -291,7 +291,7 @@ public class PenghitungKataFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_previousButtonActionPerformed
 
     private void countButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_countButtonActionPerformed
-        // TODO add your handling code here:
+        calculateCounts();
     }//GEN-LAST:event_countButtonActionPerformed
 
     /**
