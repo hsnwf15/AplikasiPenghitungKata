@@ -1,3 +1,7 @@
+import java.util.ArrayList;
+import java.awt.List;
+import javax.swing.JOptionPane;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -12,10 +16,12 @@ public class PenghitungKataFrame extends javax.swing.JFrame {
     /**
      * Creates new form PenghitungKataFrame
      */
+    private final List matchPositions;
     public PenghitungKataFrame() {
+        this.matchPositions = new List();
         initComponents();
     }
-    
+   
     // Method untuk menghitung jumlah kata, karakter, kalimat, dan paragraf
     private void calculateCounts() {
         String text = inputArea.getText().trim();
@@ -37,6 +43,41 @@ public class PenghitungKataFrame extends javax.swing.JFrame {
         wordCountLabel.setText("Kata: " + wordCount);
         sentenceCountLabel.setText("Kalimat: " + sentenceCount);
         paragraphCountLabel.setText("Paragraf: " + paragraphCount);
+    }
+   
+    private int searchIndex = -1;
+//    private List<Integer> matchPositions = new ArrayList<>();
+
+    // Method untuk mencari kata dan menandai posisinya
+    private void searchWord(String word) {
+//        matchPositions.clear();
+//        String text = inputArea.getText().toLowerCase();
+//        word = word.toLowerCase();
+//
+//        // Cari posisi setiap kemunculan kata
+//        int index = text.indexOf(word);
+//        while (index >= 0) {
+//            matchPositions.add(word);
+//            index = text.indexOf(word, index + word.length());
+//        }
+//
+//        // Highlight kata pertama jika ditemukan
+//        if (!matchPositions.isEmpty()) {
+//            highlightMatch(0);
+//        } else {
+//            JOptionPane.showMessageDialog(this, "Kata tidak ditemukan.");
+//        }
+    }
+
+    private void highlightMatch(int index) {
+//        try {
+//            int start = matchPositions.get(index);
+//            int end = start + searchField.getText().length();
+//            inputArea.select(start, end);
+//            searchIndex = index;
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
 
 
@@ -114,6 +155,11 @@ public class PenghitungKataFrame extends javax.swing.JFrame {
 
         searchButton.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         searchButton.setText("Cari");
+        searchButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchButtonActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 0;
@@ -149,6 +195,8 @@ public class PenghitungKataFrame extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 11;
         gridBagConstraints.insets = new java.awt.Insets(0, 7, 0, 7);
         jPanel2.add(jPanel3, gridBagConstraints);
 
@@ -175,6 +223,8 @@ public class PenghitungKataFrame extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 11;
         gridBagConstraints.insets = new java.awt.Insets(0, 7, 0, 7);
         jPanel2.add(jPanel4, gridBagConstraints);
 
@@ -201,6 +251,8 @@ public class PenghitungKataFrame extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 11;
         gridBagConstraints.insets = new java.awt.Insets(0, 7, 0, 7);
         jPanel2.add(jPanel5, gridBagConstraints);
 
@@ -227,6 +279,8 @@ public class PenghitungKataFrame extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 11;
         gridBagConstraints.insets = new java.awt.Insets(0, 7, 0, 7);
         jPanel2.add(jPanel6, gridBagConstraints);
 
@@ -246,8 +300,8 @@ public class PenghitungKataFrame extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
-        gridBagConstraints.ipadx = 29;
+        gridBagConstraints.gridwidth = 7;
+        gridBagConstraints.ipadx = 40;
         gridBagConstraints.ipady = 29;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(12, 0, 0, 0);
@@ -262,6 +316,7 @@ public class PenghitungKataFrame extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 5;
         gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
         gridBagConstraints.insets = new java.awt.Insets(9, 0, 9, 9);
         jPanel1.add(previousButton, gridBagConstraints);
 
@@ -276,7 +331,7 @@ public class PenghitungKataFrame extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 619, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 730, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -287,12 +342,17 @@ public class PenghitungKataFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void previousButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_previousButtonActionPerformed
-        // TODO add your handling code here:
+            
+        
     }//GEN-LAST:event_previousButtonActionPerformed
 
     private void countButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_countButtonActionPerformed
         calculateCounts();
     }//GEN-LAST:event_countButtonActionPerformed
+
+    private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchButtonActionPerformed
 
     /**
      * @param args the command line arguments
