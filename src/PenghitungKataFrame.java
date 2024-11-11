@@ -9,6 +9,8 @@ import javax.swing.text.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultHighlighter;
@@ -102,6 +104,8 @@ public class PenghitungKataFrame extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Terjadi kesalahan saat menyimpan file.");
             }
        }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -422,6 +426,48 @@ public class PenghitungKataFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_previousButtonActionPerformed
 
     private void countButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_countButtonActionPerformed
+        inputArea.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                updateCount();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                updateCount();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                updateCount();
+            }
+
+            // Fungsi untuk menghitung jumlah kata, karakter, kalimat, dan paragraf
+            private void updateCount() {
+                String text = inputArea.getText();
+
+                // Hitung jumlah karakter
+                int charCount = text.length();
+
+                // Hitung jumlah kata
+                String[] words = text.trim().split("\\s+");
+                int wordCount = words.length;
+
+                // Hitung jumlah kalimat
+                String[] sentences = text.split("[.!?]");
+                int sentenceCount = sentences.length;
+
+                // Hitung jumlah paragraf
+                String[] paragraphs = text.split("\\n+");
+                int paragraphCount = paragraphs.length;
+
+                // Tampilkan hasil
+                charCountLabel.setText("Karakter: " + charCount);
+                wordCountLabel.setText("Kata: " + wordCount);
+                sentenceCountLabel.setText("Kalimat: " + sentenceCount);
+                paragraphCountLabel.setText("Paragraf: " + paragraphCount);
+            }
+        });
         calculateCounts();
     }//GEN-LAST:event_countButtonActionPerformed
 
