@@ -47,40 +47,7 @@ public class PenghitungKataFrame extends javax.swing.JFrame {
         paragraphCountLabel.setText("Paragraf: " + paragraphCount);
     }
    
-    private int searchIndex = -1;
-    private final List<Integer> matchPositions = new ArrayList<>();
-
-    // Method untuk mencari kata dan menandai posisinya
-    private void searchWord(String word) {
-        matchPositions.clear();
-        String text = inputArea.getText().toLowerCase();
-        word = word.toLowerCase();
-
-        // Cari posisi setiap kemunculan kata
-        int index = text.indexOf(word);
-        while (index >= 0) {
-            matchPositions.add(index);
-            index = text.indexOf(word, index + word.length());
-        }
-
-        // Highlight kata pertama jika ditemukan
-        if (!matchPositions.isEmpty()) {
-            highlightMatch(0);
-        } else {
-            JOptionPane.showMessageDialog(this, "Kata tidak ditemukan.");
-        }
-    }
-
-    private void highlightMatch(int index) {
-        try {
-            int start = matchPositions.get(index);
-            int end = start + searchField.getText().length();
-            inputArea.select(start, end);
-            searchIndex = index;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+   
 
     private void saveToFile() {
             String text = inputArea.getText();
@@ -129,6 +96,7 @@ public class PenghitungKataFrame extends javax.swing.JFrame {
         paragraphCountLabel = new javax.swing.JLabel();
         countButton = new javax.swing.JButton();
         saveButton = new javax.swing.JButton();
+        resetButton = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         searchField = new javax.swing.JTextField();
@@ -194,6 +162,7 @@ public class PenghitungKataFrame extends javax.swing.JFrame {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.ipadx = 11;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(7, 7, 7, 7);
         jPanel2.add(jPanel3, gridBagConstraints);
 
@@ -221,6 +190,7 @@ public class PenghitungKataFrame extends javax.swing.JFrame {
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.ipadx = 11;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(7, 7, 7, 7);
         jPanel2.add(jPanel4, gridBagConstraints);
 
@@ -248,6 +218,7 @@ public class PenghitungKataFrame extends javax.swing.JFrame {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.ipadx = 11;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(7, 7, 7, 7);
         jPanel2.add(jPanel5, gridBagConstraints);
 
@@ -275,6 +246,7 @@ public class PenghitungKataFrame extends javax.swing.JFrame {
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.ipadx = 11;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(7, 7, 7, 7);
         jPanel2.add(jPanel6, gridBagConstraints);
 
@@ -288,7 +260,8 @@ public class PenghitungKataFrame extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 14, 0);
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 7, 14, 0);
         jPanel2.add(countButton, gridBagConstraints);
 
         saveButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -301,8 +274,17 @@ public class PenghitungKataFrame extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 14, 0);
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 7, 14, 0);
         jPanel2.add(saveButton, gridBagConstraints);
+
+        resetButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        resetButton.setText("Reset");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 14, 0);
+        jPanel2.add(resetButton, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -322,6 +304,12 @@ public class PenghitungKataFrame extends javax.swing.JFrame {
         gridBagConstraints.gridy = 0;
         gridBagConstraints.insets = new java.awt.Insets(9, 0, 9, 10);
         jPanel7.add(jLabel2, gridBagConstraints);
+
+        searchField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchFieldActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 0;
@@ -357,6 +345,11 @@ public class PenghitungKataFrame extends javax.swing.JFrame {
         jPanel7.add(previousButton, gridBagConstraints);
 
         nextButton.setText(">");
+        nextButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nextButtonActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 7;
         gridBagConstraints.gridy = 0;
@@ -373,7 +366,7 @@ public class PenghitungKataFrame extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 580, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 599, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -403,6 +396,14 @@ public class PenghitungKataFrame extends javax.swing.JFrame {
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         saveToFile();
     }//GEN-LAST:event_saveButtonActionPerformed
+
+    private void nextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nextButtonActionPerformed
+
+    private void searchFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchFieldActionPerformed
 
     /**
      * @param args the command line arguments
@@ -460,6 +461,7 @@ public class PenghitungKataFrame extends javax.swing.JFrame {
     private javax.swing.JButton nextButton;
     private javax.swing.JLabel paragraphCountLabel;
     private javax.swing.JButton previousButton;
+    private javax.swing.JButton resetButton;
     private javax.swing.JButton saveButton;
     private javax.swing.JButton searchButton;
     private javax.swing.JTextField searchField;
