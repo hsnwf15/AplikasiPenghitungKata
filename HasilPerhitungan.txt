@@ -1,0 +1,9 @@
+Teks Input:
+DefaultHighlighter.DefaultHighlightPainter highlightPainter = new DefaultHighlighter.DefaultHighlightPainter(Color.YELLOW);
+
+
+Hasil Perhitungan:
+Jumlah Karakter: Karakter: 123
+Jumlah Kata: Kata: 5
+Jumlah Kalimat: Kalimat: 4
+Jumlah Paragraf: Paragraf: 1

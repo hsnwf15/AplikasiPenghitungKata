@@ -1,9 +1,18 @@
-import java.util.ArrayList;
-import java.awt.List;
+
+import java.awt.Color;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.swing.JOptionPane;
+import javax.swing.*;
+import javax.swing.text.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DefaultHighlighter;
+import javax.swing.text.Highlighter;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -22,8 +31,35 @@ public class PenghitungKataFrame extends javax.swing.JFrame {
     
     public PenghitungKataFrame() {
         initComponents();
+        // Warna highlight untuk hasil pencarian
+        highlightPainter = new DefaultHighlighter.DefaultHighlightPainter(Color.YELLOW);
+
     }
-   
+    private Highlighter.HighlightPainter highlightPainter;
+    private int lastMatchIndex = -1; // Posisi pencarian terakhir
+    
+    
+
+        
+    // Metode untuk menyoroti semua kemunculan kata
+    private void highlightAllOccurrences(String keyword) {
+        try {
+            Highlighter highlighter = inputArea.getHighlighter();
+            highlighter.removeAllHighlights(); // Hapus highlight sebelumnya
+            String text = inputArea.getText().toLowerCase();
+            keyword = keyword.toLowerCase();
+            
+            int index = text.indexOf(keyword);
+            while (index >= 0) {
+                int end = index + keyword.length();
+                highlighter.addHighlight(index, end, highlightPainter);
+                index = text.indexOf(keyword, end);
+            }
+        } catch (BadLocationException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
     // Method untuk menghitung jumlah kata, karakter, kalimat, dan paragraf
     private void calculateCounts() {
         String text = inputArea.getText().trim();
@@ -280,6 +316,11 @@ public class PenghitungKataFrame extends javax.swing.JFrame {
 
         resetButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         resetButton.setText("Reset");
+        resetButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                resetButtonActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
@@ -377,8 +418,7 @@ public class PenghitungKataFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void previousButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_previousButtonActionPerformed
-            
-        
+        navigateMatch(false); // Kembali ke hasil sebelumnya
     }//GEN-LAST:event_previousButtonActionPerformed
 
     private void countButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_countButtonActionPerformed
@@ -386,7 +426,8 @@ public class PenghitungKataFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_countButtonActionPerformed
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
-        // TODO add your handling code here:
+        highlightAllOccurrences(searchField.getText());
+        lastMatchIndex = -1; // Reset posisi terakhir saat pencarian baru dimulai
     }//GEN-LAST:event_searchButtonActionPerformed
 
     private void inputAreaPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_inputAreaPropertyChange
@@ -398,12 +439,22 @@ public class PenghitungKataFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void nextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextButtonActionPerformed
-        // TODO add your handling code here:
+        navigateMatch(true); // Maju ke hasil berikutnya
     }//GEN-LAST:event_nextButtonActionPerformed
 
     private void searchFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_searchFieldActionPerformed
+
+    private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetButtonActionPerformed
+        // Mengosongkan area teks dan label hasil perhitungan
+        inputArea.setText("");
+        charCountLabel.setText("Karakter: -");
+        wordCountLabel.setText("Kata: -");
+        sentenceCountLabel.setText("Kalimat: -");
+        paragraphCountLabel.setText("Paragraf: -");
+        searchField.setText("");
+    }//GEN-LAST:event_resetButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -468,4 +519,36 @@ public class PenghitungKataFrame extends javax.swing.JFrame {
     private javax.swing.JLabel sentenceCountLabel;
     private javax.swing.JLabel wordCountLabel;
     // End of variables declaration//GEN-END:variables
+
+    private void navigateMatch(boolean isNext) {
+        try {
+            String keyword = searchField.getText().toLowerCase();
+            String text = inputArea.getText().toLowerCase();
+            int index;
+
+            if (isNext) {
+                // Cari kemunculan berikutnya
+                index = text.indexOf(keyword, lastMatchIndex + 1);
+                if (index < 0) { // Reset ke awal jika tidak ada kemunculan
+                    index = text.indexOf(keyword);
+                }
+            } else {
+                // Cari kemunculan sebelumnya
+                index = text.lastIndexOf(keyword, lastMatchIndex - 1);
+                if (index < 0) { // Reset ke akhir jika tidak ada kemunculan
+                    index = text.lastIndexOf(keyword);
+                }
+            }
+
+            if (index >= 0) {
+                int end = index + keyword.length();
+                inputArea.getHighlighter().removeAllHighlights(); // Hapus highlight lama
+                inputArea.getHighlighter().addHighlight(index, end, highlightPainter);
+                inputArea.setCaretPosition(end); // Pindah ke akhir highlight
+                lastMatchIndex = index; // Update posisi pencarian terakhir
+            }
+        } catch (BadLocationException ex) {
+            ex.printStackTrace();
+        }
+    }
 }
