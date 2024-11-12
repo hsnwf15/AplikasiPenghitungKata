@@ -43,6 +43,20 @@ Aplikasi **Word Counter** adalah aplikasi desktop berbasis Java yang dibuat meng
 3. **Menyimpan Teks dan Hasil Perhitungan ke File**:
    - Tekan tombol **Simpan** untuk menyimpan teks yang ada di `inputArea` beserta hasil perhitungan jumlah kata, karakter, kalimat, dan paragraf ke dalam file `HasilPerhitungan.txt`.
 
+## Tampilan Aplikasi
+
+- ### Tampilan awal aplikasi saat baru dijalankan
+  ![](ss1.PNG)
+
+- ### Memasukkan teks dan menjalankan proses hitung kata
+  ![](ss2.PNG)
+  
+- ### Melakukan pencarian kata
+  ![](ss3.PNG)
+  
+- ### Menyimpan inputan dan hasil hitung ke dalam file .txt
+  ![](ss4.PNG)
+
 ## Teknologi yang Digunakan
 
 - **Java**: Bahasa pemrograman utama.
