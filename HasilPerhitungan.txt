@@ -1,9 +1,11 @@
 Teks Input:
-DefaultHighlighter.DefaultHighlightPainter highlightPainter = new DefaultHighlighter.DefaultHighlightPainter(Color.YELLOW);
-
+Jelaskan tahap-tahap utama dalam produksi video iklan mulai dari pra-produksi hingga pasca-produksi. Mengapa setiap tahap ini penting?
+Apa yang dimaksud dengan "storyboard" dalam konteks produksi video iklan, dan bagaimana perannya dalam tahap pra-produksi? Berikan contohnya.
+Apa saja elemen-elemen visual yang perlu diperhatikan dalam pembuatan video iklan untuk menarik perhatian audiens?
+Bagaimana peran musik dan efek suara dalam meningkatkan kualitas dan daya tarik video iklan?
 
 Hasil Perhitungan:
-Jumlah Karakter: Karakter: 123
-Jumlah Kata: Kata: 5
-Jumlah Kalimat: Kalimat: 4
-Jumlah Paragraf: Paragraf: 1
+Jumlah Karakter: Karakter: 484
+Jumlah Kata: Kata: 64
+Jumlah Kalimat: Kalimat: 6
+Jumlah Paragraf: Paragraf: 4
