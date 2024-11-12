@@ -71,4 +71,4 @@ Aplikasi **Word Counter** adalah aplikasi desktop berbasis Java yang dibuat meng
 
 ## Lisensi
 
-Proyek ini dilisensikan di bawah [MIT License](LICENSE).
+Proyek ini bebas digunakan untuk keperluan belajar dan pengembangan lebih lanjut.
